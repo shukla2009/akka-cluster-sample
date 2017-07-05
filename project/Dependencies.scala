@@ -6,7 +6,7 @@ object Dependencies {
   lazy val version = new {
     val scalaTest = "3.0.0"
     val scalaCheck = "1.13.4"
-    val akka = "2.4.18"
+    val akka = "2.5.3"
   }
 
   lazy val library = new {

@@ -26,9 +26,10 @@ abstract class ClusterAwareNodeGuardian extends ClusterAware {
   import akka.pattern.gracefulStop
   import context.dispatcher
 
+  private val maxNrOfRetries = 10
   // customize
   override val supervisorStrategy =
-    OneForOneStrategy(maxNrOfRetries = 10, withinTimeRange = 1.minute) {
+    OneForOneStrategy(maxNrOfRetries = maxNrOfRetries, withinTimeRange = 1.minute) {
       case _: ActorInitializationException => Stop
       case _: IllegalArgumentException => Stop
       case _: IllegalStateException => Restart
@@ -47,7 +48,7 @@ abstract class ClusterAwareNodeGuardian extends ClusterAware {
   }
 
   /** On startup, actor is in an [[uninitialized]] state. */
-  override def receive = uninitialized orElse initialized orElse super.receive
+  override def receive:Receive = uninitialized orElse initialized orElse super.receive
 
   def uninitialized: Actor.Receive = {
     case "initialize" => initialize()

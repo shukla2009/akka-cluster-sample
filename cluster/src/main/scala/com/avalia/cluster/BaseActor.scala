@@ -1,10 +1,8 @@
 package com.avalia.cluster
 
-/**
-  * Created by Rahul Shukla on 3/3/17.
-  */
 
-import akka.actor.Actor
+
+import akka.actor.{Actor, Address}
 import com.typesafe.config.{Config, ConfigFactory}
 
 /** A `NodeGuardian` manages the worker actors at the root of each
@@ -16,9 +14,12 @@ import com.typesafe.config.{Config, ConfigFactory}
 class BaseActor extends ClusterAwareNodeGuardian {
 
   override def preStart(): Unit = {
+    //val port = 2552
+    //val host = "127.0.0.1"
+    //cluster.joinSeedNodes(Vector(Address("akka.tcp", "ClusterSystem", host, port)))
     super.preStart()
-    cluster.joinSeedNodes(Vector(cluster.selfAddress))
   }
+
 
   override def initialize(): Unit = {
     super.initialize()

@@ -38,4 +38,8 @@ object ConfigHelper {
     ConfigFactory.parseString(s"akka.cluster.roles = [${roles.mkString(",")}]")
       .withFallback(ConfigFactory.load(new AkkaClusterHelperClassLoader(getClass.getClassLoader)))
   }
+
+  def getConfig(): Config = {
+    ConfigFactory.load(new AkkaClusterHelperClassLoader(getClass.getClassLoader))
+  }
 }
